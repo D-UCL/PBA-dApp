@@ -1,7 +1,7 @@
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
-//Name: Sch_MC_Update
+//Name: CashIn_MC_update_003
 //Description: 
 
 contract owned {
@@ -81,68 +81,71 @@ contract owned {
   }
 }
 
-interface IScheduleIII {
+interface ICashInI {
   struct Data {
     uint256 A_Added;
-    string A_ID;
     string A_Role;
-    string A_Works;
+    uint256 A_ID;
     string A_Contract;
-    uint256 A_Planned;
-    uint256 A_Actual;
-    string A_Complete;
-    string A_Status;
-    string A_CostCode;
+    uint256 A_Milestone;
+    uint256 A_Revision;
     uint256 A_Start;
     uint256 A_End;
-    address payable A_Payee;
+    uint256 A_Planned;
+    uint256 A_Actual;
+    string A_CostCode;
+    string A_Status;
+    uint256 A_PercentageComp;
+    uint256 A_DaysBehind;
+    uint256 A_Updated;
+    address payable A_PBA;
   }
   function AcceptOwnership() external returns(bool);
   function AddPermission(address addr) external returns(bool);
   function Delete(address recordId) external returns(bool);
   function Exists(address recordId) external returns(bool);
-  function GetById(address recordId) external returns(uint256,IScheduleIII.Data memory);
-  function GetByIndex(uint256 recordIndex) external returns(address,IScheduleIII.Data memory);
+  function GetById(address recordId) external returns(uint256,ICashInI.Data memory);
+  function GetByIndex(uint256 recordIndex) external returns(address,ICashInI.Data memory);
   function GetLength() external returns(uint256);
   function GetPermission(uint256 index) external returns(address);
   function GetPermissionListLength() external returns(uint256);
   function HasPermission(address sender) external returns(bool);
   function IdList(uint256 ) external returns(address);
-  function Insert(IScheduleIII.Data calldata) external returns(bool);
+  function Insert(ICashInI.Data calldata) external returns(bool);
   function Name() external returns(string memory);
   function RemovePermission(address addr) external returns(bool);
-  function Table(address ) external returns(IScheduleIII.Data memory,uint256);
+  function Table(address ) external returns(ICashInI.Data memory,uint256);
   function TransferOwnership(address _newOwner) external returns(bool);
-  function Update(address recordId, IScheduleIII.Data calldata) external returns(bool);
+  function Update(address recordId, ICashInI.Data calldata) external returns(bool);
   function newOwner() external returns(address);
   function owner() external returns(address);
   function permissionedList(uint256 ) external returns(address);
 }
-interface IMC {
+interface IMainContractor {
   struct Data {
     uint256 A_Added;
     string A_Role;
     string A_ID;
     string A_Contract;
-    address payable A_Address;
+    address payable A_Wallet;
   }
   function AcceptOwnership() external returns(bool);
   function AddPermission(address addr) external returns(bool);
   function Delete(address recordId) external returns(bool);
   function Exists(address recordId) external returns(bool);
-  function GetById(address recordId) external returns(uint256,IMC.Data memory);
-  function GetByIndex(uint256 recordIndex) external returns(address,IMC.Data memory);
+  function GetById(address recordId) external returns(uint256,IMainContractor.Data memory);
+  function GetByIndex(uint256 recordIndex) external returns(address,IMainContractor.Data memory);
   function GetLength() external returns(uint256);
   function GetPermission(uint256 index) external returns(address);
   function GetPermissionListLength() external returns(uint256);
   function HasPermission(address sender) external returns(bool);
   function IdList(uint256 ) external returns(address);
-  function Insert(IMC.Data calldata) external returns(bool);
+  function Insert(IMainContractor.Data calldata) external returns(bool);
   function Name() external returns(string memory);
   function RemovePermission(address addr) external returns(bool);
-  function Table(address ) external returns(IMC.Data memory,uint256);
+  function Table(address ) external returns(IMainContractor.Data memory,uint256);
   function TransferOwnership(address _newOwner) external returns(bool);
-  function Update(address recordId, IMC.Data calldata) external returns(bool);
+  function Update(address recordId, IMainContractor.Data calldata) external returns(bool);
   function newOwner() external returns(address);
   function owner() external returns(address);
   function permissionedList(uint256 ) external returns(address);
@@ -151,18 +154,18 @@ interface IMC {
 contract trigger is owned {
   using SafeMath for uint;
 
-  address ScheduleIIIAddress = 0xd1731B97F15b69f5b6d673eFD249D87c467D02B0;
-  address MCAddress = 0xBE88b614e8cDE058e7556c4a2F2C4304F26F30ba;
+  address CashInIAddress = 0x8A17A1fF265734D6ddF240f070a5090B8720F130;
+  address MainContractorAddress = 0xdC032b81464e64b3592335DF8185799283dC23c7;
 
-  function invoke(address _recordId,IScheduleIII.Data memory ScheduleIII_Data) public  returns(bool){
+  function invoke(address _recordId,ICashInI.Data memory CashInI_Data) public  returns(bool){
 
     //Instantiate Global Interfaces
-    IScheduleIII ScheduleIII = IScheduleIII(ScheduleIIIAddress);
+    ICashInI CashInI = ICashInI(CashInIAddress);
 
     //Declare and Initialize Constant Interfaces
-    uint256 ScheduleIII_GetById_index;
-    IScheduleIII.Data memory ScheduleIII_GetById_record;
-    (ScheduleIII_GetById_index,ScheduleIII_GetById_record) = ScheduleIII.GetById(_recordId);
+    uint256 CashInI_GetById_index;
+    ICashInI.Data memory CashInI_GetById_record;
+    (CashInI_GetById_index,CashInI_GetById_record) = CashInI.GetById(_recordId);
 
     //Required Payment Options
 
@@ -170,19 +173,20 @@ contract trigger is owned {
       Condition0(msg.sender);
 
     //Map Values to Action Interface
-    ScheduleIII_Data.A_Added = ScheduleIII_GetById_record.A_Added;
-    ScheduleIII_Data.A_ID = ScheduleIII_GetById_record.A_ID;
-    ScheduleIII_Data.A_Role = ScheduleIII_GetById_record.A_Role;
-    ScheduleIII_Data.A_Works = ScheduleIII_GetById_record.A_Works;
-    ScheduleIII_Data.A_Contract = ScheduleIII_GetById_record.A_Contract;
-    ScheduleIII_Data.A_Planned = ScheduleIII_GetById_record.A_Planned;
-    ScheduleIII_Data.A_Status = 'Verified';
-    ScheduleIII_Data.A_Start = ScheduleIII_GetById_record.A_Start;
-    ScheduleIII_Data.A_End = ScheduleIII_GetById_record.A_End;
-    ScheduleIII_Data.A_Payee = ScheduleIII_GetById_record.A_Payee;
+    CashInI_Data.A_Added = CashInI_GetById_record.A_Added;
+    CashInI_Data.A_Role = CashInI_GetById_record.A_Role;
+    CashInI_Data.A_ID = CashInI_GetById_record.A_ID;
+    CashInI_Data.A_Contract = CashInI_GetById_record.A_Contract;
+    CashInI_Data.A_Milestone = CashInI_GetById_record.A_Milestone;
+    CashInI_Data.A_Actual = CashInI_GetById_record.A_Actual;
+    CashInI_Data.A_Status = 'Updated';
+    CashInI_Data.A_PercentageComp = CashInI_GetById_record.A_PercentageComp;
+    CashInI_Data.A_Updated = block.timestamp * 1000;
+    CashInI_Data.A_PBA = CashInI_GetById_record.A_PBA;
+    CashInI_Data.A_Revision = CashInI_GetById_record.A_Revision.add(1);
 
     //Execute Action
-    require(ScheduleIII.Update(_recordId,ScheduleIII_Data));
+    require(CashInI.Update(_recordId,CashInI_Data));
 
     //Return Success
     return true;
@@ -190,16 +194,16 @@ contract trigger is owned {
 
   //Condition Functions
   function Condition0(address _msgSenderBase) private  {
-        IMC MC = IMC(MCAddress);
+        IMainContractor MainContractor = IMainContractor(MainContractorAddress);
         bool contains = false;
 
-        for(uint x = 0; x < MC.GetLength(); x++){
+        for(uint x = 0; x < MainContractor.GetLength(); x++){
 
-          address MC_GetByIndex_recordId;
-          IMC.Data memory MC_GetByIndex_record;
-          (MC_GetByIndex_recordId,MC_GetByIndex_record) = MC.GetByIndex(x);
+          address MainContractor_GetByIndex_recordId;
+          IMainContractor.Data memory MainContractor_GetByIndex_record;
+          (MainContractor_GetByIndex_recordId,MainContractor_GetByIndex_record) = MainContractor.GetByIndex(x);
 
-            if(_msgSenderBase == MC_GetByIndex_record.A_Address){
+            if(_msgSenderBase == MainContractor_GetByIndex_record.A_Wallet){
               contains = true;
               break;
             }
