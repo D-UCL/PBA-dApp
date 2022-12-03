@@ -89,7 +89,7 @@ contract dtable is owned {
     string A_Role;
     string A_ID;
     string A_Contract;
-    address A_Address;
+    address A_Wallet;
   }
   struct Record {
     Data data;
@@ -98,7 +98,7 @@ contract dtable is owned {
 
   mapping(address => Record) public Table;
   address[] public IdList;
-  string public Name = "PBA";
+  string public Name = "PBAmanager";
 
   function Exists(address recordId) public view returns(bool exists) {
     if (IdList.length == 0) return false;
