@@ -77,24 +77,27 @@ contract owned {
 
 }
 
-interface IScheduleIII {
+interface ICashoutII {
   struct Data {
     uint256 A_Added;
-    string A_ID;
     string A_Role;
-    string A_Works;
+    uint256 A_ID;
     string A_Contract;
-    uint256 A_Planned;
-    uint256 A_Actual;
-    string A_Complete;
-    string A_Status;
-    string A_CostCode;
+    string A_Works;
+    uint256 A_Revision;
     uint256 A_Start;
     uint256 A_End;
+    uint256 A_Planned;
+    uint256 A_Actual;
+    string A_CostCode;
+    string A_Status;
+    uint256 A_PercentageComp;
+    uint256 A_DaysBehind;
+    uint256 A_LastUpdate;
     address payable A_Payee;
   }
   function Exists(address recordId) external returns(bool);
-  function GetById(address recordId) external returns(uint256,IScheduleIII.Data memory);
+  function GetById(address recordId) external returns(uint256,ICashoutII.Data memory);
 }
 
 contract dtable is owned {
@@ -104,8 +107,8 @@ contract dtable is owned {
   event Deleted(address _sender, address _recordId);
 
   struct Data {
-    address A_Wallet;
-    address A_ScheduleIII_Pointer;
+    address A_Address;
+    address A_CashoutII_Pointer;
   }
   struct Record {
     Data data;
@@ -114,7 +117,7 @@ contract dtable is owned {
 
   mapping(address => Record) public Table;
   address[] public IdList;
-  string public Name = "ViewII";
+  string public Name = "SubcWorksII";
 
   function Exists(address recordId) public view returns(bool exists) {
     if (IdList.length == 0) return false;
@@ -125,29 +128,29 @@ contract dtable is owned {
     return IdList.length;
   }
 
-  function GetByIndex(uint recordIndex) public returns(address recordId, Data memory record ,IScheduleIII.Data memory R_ScheduleIII_Data) {
+  function GetByIndex(uint recordIndex) public returns(address recordId, Data memory record ,ICashoutII.Data memory R_CashoutII_Data) {
     require(recordIndex < IdList.length, 'recordIndex-out-of-range');
-        IScheduleIII A_ScheduleIII_Pointer_pointerInstance = IScheduleIII(0xd1731B97F15b69f5b6d673eFD249D87c467D02B0);
-        IScheduleIII.Data memory ScheduleIII_Data;
-        uint A_ScheduleIII_Pointer_index;
-        (A_ScheduleIII_Pointer_index, ScheduleIII_Data) = A_ScheduleIII_Pointer_pointerInstance.GetById(Table[IdList[recordIndex]].data.A_ScheduleIII_Pointer);
-      return (IdList[recordIndex], Table[IdList[recordIndex]].data, ScheduleIII_Data);
+        ICashoutII A_CashoutII_Pointer_pointerInstance = ICashoutII(0xbb93F9eA1BaB92F71EF8A796f75ce586aC85AAb6);
+        ICashoutII.Data memory CashoutII_Data;
+        uint A_CashoutII_Pointer_index;
+        (A_CashoutII_Pointer_index, CashoutII_Data) = A_CashoutII_Pointer_pointerInstance.GetById(Table[IdList[recordIndex]].data.A_CashoutII_Pointer);
+      return (IdList[recordIndex], Table[IdList[recordIndex]].data, CashoutII_Data);
   }
 
-  function GetById(address recordId) public returns(uint index, Data memory record ,IScheduleIII.Data memory R_ScheduleIII_Data) {
+  function GetById(address recordId) public returns(uint index, Data memory record ,ICashoutII.Data memory R_CashoutII_Data) {
     require(Exists(recordId), 'recordId-not-found');
-        IScheduleIII A_ScheduleIII_Pointer_pointerInstance = IScheduleIII(0xd1731B97F15b69f5b6d673eFD249D87c467D02B0);
-        IScheduleIII.Data memory ScheduleIII_Data;
-        uint A_ScheduleIII_Pointer_index;
-        (A_ScheduleIII_Pointer_index, ScheduleIII_Data) = A_ScheduleIII_Pointer_pointerInstance.GetById(Table[recordId].data.A_ScheduleIII_Pointer);
-      return (Table[recordId].idListPointer, Table[recordId].data, ScheduleIII_Data);
+        ICashoutII A_CashoutII_Pointer_pointerInstance = ICashoutII(0xbb93F9eA1BaB92F71EF8A796f75ce586aC85AAb6);
+        ICashoutII.Data memory CashoutII_Data;
+        uint A_CashoutII_Pointer_index;
+        (A_CashoutII_Pointer_index, CashoutII_Data) = A_CashoutII_Pointer_pointerInstance.GetById(Table[recordId].data.A_CashoutII_Pointer);
+      return (Table[recordId].idListPointer, Table[recordId].data, CashoutII_Data);
   }
 
   function Insert(Data memory recordData) public authorized returns(bool success) {
     address recordAddress = address(uint160(uint(keccak256(abi.encodePacked(msg.sender, IdList.length, block.timestamp)))));
     require(!Exists(recordAddress), 'recordId-already-exist');
-    IScheduleIII A_ScheduleIII_Pointer_pointerInstance = IScheduleIII(0xd1731B97F15b69f5b6d673eFD249D87c467D02B0);
-    require(A_ScheduleIII_Pointer_pointerInstance.Exists(recordData.A_ScheduleIII_Pointer), 'pointer-record-address-not-found');
+    ICashoutII A_CashoutII_Pointer_pointerInstance = ICashoutII(0xbb93F9eA1BaB92F71EF8A796f75ce586aC85AAb6);
+    require(A_CashoutII_Pointer_pointerInstance.Exists(recordData.A_CashoutII_Pointer), 'pointer-record-address-not-found');
     Table[recordAddress].data = recordData;
     IdList.push(recordAddress);
     Table[recordAddress].idListPointer = IdList.length - 1;
@@ -157,8 +160,8 @@ contract dtable is owned {
 
   function Update(address recordId, Data memory recordData) public authorized returns(bool success) {
     require(Exists(recordId), 'recordId-not-found');
-    IScheduleIII A_ScheduleIII_Pointer_pointerInstance = IScheduleIII(0xd1731B97F15b69f5b6d673eFD249D87c467D02B0);
-    require(A_ScheduleIII_Pointer_pointerInstance.Exists(recordData.A_ScheduleIII_Pointer), 'pointer-record-address-not-found');
+    ICashoutII A_CashoutII_Pointer_pointerInstance = ICashoutII(0xbb93F9eA1BaB92F71EF8A796f75ce586aC85AAb6);
+    require(A_CashoutII_Pointer_pointerInstance.Exists(recordData.A_CashoutII_Pointer), 'pointer-record-address-not-found');
     Table[recordId].data = recordData;
     emit Updated(msg.sender, recordId);
     return true;
