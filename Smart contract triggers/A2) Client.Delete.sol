@@ -1,7 +1,7 @@
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
-//Name: C_Del
+//Name: C_Del_001
 //Description: 
 
 contract owned {
@@ -81,31 +81,31 @@ contract owned {
   }
 }
 
-interface IC {
+interface IClient {
   struct Data {
     uint256 A_Added;
     string A_Role;
     string A_ID;
     string A_Contract;
-    address payable A_Address;
+    address payable A_Wallet;
   }
   function AcceptOwnership() external returns(bool);
   function AddPermission(address addr) external returns(bool);
   function Delete(address recordId) external returns(bool);
   function Exists(address recordId) external returns(bool);
-  function GetById(address recordId) external returns(uint256,IC.Data memory);
-  function GetByIndex(uint256 recordIndex) external returns(address,IC.Data memory);
+  function GetById(address recordId) external returns(uint256,IClient.Data memory);
+  function GetByIndex(uint256 recordIndex) external returns(address,IClient.Data memory);
   function GetLength() external returns(uint256);
   function GetPermission(uint256 index) external returns(address);
   function GetPermissionListLength() external returns(uint256);
   function HasPermission(address sender) external returns(bool);
   function IdList(uint256 ) external returns(address);
-  function Insert(IC.Data calldata) external returns(bool);
+  function Insert(IClient.Data calldata) external returns(bool);
   function Name() external returns(string memory);
   function RemovePermission(address addr) external returns(bool);
-  function Table(address ) external returns(IC.Data memory,uint256);
+  function Table(address ) external returns(IClient.Data memory,uint256);
   function TransferOwnership(address _newOwner) external returns(bool);
-  function Update(address recordId, IC.Data calldata) external returns(bool);
+  function Update(address recordId, IClient.Data calldata) external returns(bool);
   function newOwner() external returns(address);
   function owner() external returns(address);
   function permissionedList(uint256 ) external returns(address);
@@ -114,17 +114,17 @@ interface IC {
 contract trigger is owned {
   using SafeMath for uint;
 
-  address CAddress = 0x0f6B0c784eb31Db4FE356439F110b314C7B80621;
+  address ClientAddress = 0x6Ad768315a7fabca8F8D8Ea475B745532043963B;
 
   function invoke(address _recordId) public  returns(bool){
 
     //Instantiate Global Interfaces
-    IC C = IC(CAddress);
+    IClient Client = IClient(ClientAddress);
 
     //Declare and Initialize Constant Interfaces
-    uint256 C_GetById_index;
-    IC.Data memory C_GetById_record;
-    (C_GetById_index,C_GetById_record) = C.GetById(_recordId);
+    uint256 Client_GetById_index;
+    IClient.Data memory Client_GetById_record;
+    (Client_GetById_index,Client_GetById_record) = Client.GetById(_recordId);
 
     //Required Payment Options
 
@@ -134,7 +134,7 @@ contract trigger is owned {
     //Map Values to Action Interface
 
     //Execute Action
-    require(C.Delete(_recordId));
+    require(Client.Delete(_recordId));
 
     //Return Success
     return true;
@@ -142,16 +142,16 @@ contract trigger is owned {
 
   //Condition Functions
   function Condition0(address _msgSenderBase) private  {
-        IC C = IC(CAddress);
+        IClient Client = IClient(ClientAddress);
         bool contains = false;
 
-        for(uint x = 0; x < C.GetLength(); x++){
+        for(uint x = 0; x < Client.GetLength(); x++){
 
-          address C_GetByIndex_recordId;
-          IC.Data memory C_GetByIndex_record;
-          (C_GetByIndex_recordId,C_GetByIndex_record) = C.GetByIndex(x);
+          address Client_GetByIndex_recordId;
+          IClient.Data memory Client_GetByIndex_record;
+          (Client_GetByIndex_recordId,Client_GetByIndex_record) = Client.GetByIndex(x);
 
-            if(_msgSenderBase == C_GetByIndex_record.A_Address){
+            if(_msgSenderBase == Client_GetByIndex_record.A_Wallet){
               contains = true;
               break;
             }
