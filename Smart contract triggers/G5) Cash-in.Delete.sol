@@ -1,7 +1,7 @@
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
-//Name: mPBA_del
+//Name: CashIn_C_Del_004
 //Description: 
 
 contract owned {
@@ -81,65 +81,104 @@ contract owned {
   }
 }
 
-interface ImainPBA {
+interface ICashInI {
   struct Data {
     uint256 A_Added;
-    string A_Milestone;
-    string A_Revision;
+    string A_Role;
+    uint256 A_ID;
+    string A_Contract;
+    uint256 A_Milestone;
+    uint256 A_Revision;
+    uint256 A_Start;
+    uint256 A_End;
     uint256 A_Planned;
     uint256 A_Actual;
-    string A_Schedule;
+    string A_CostCode;
     string A_Status;
-    uint256 A_From;
-    uint256 A_To;
+    uint256 A_PercentageComp;
+    uint256 A_DaysBehind;
+    uint256 A_Updated;
     address payable A_PBA;
   }
   function AcceptOwnership() external returns(bool);
   function AddPermission(address addr) external returns(bool);
   function Delete(address recordId) external returns(bool);
   function Exists(address recordId) external returns(bool);
-  function GetById(address recordId) external returns(uint256,ImainPBA.Data memory);
-  function GetByIndex(uint256 recordIndex) external returns(address,ImainPBA.Data memory);
+  function GetById(address recordId) external returns(uint256,ICashInI.Data memory);
+  function GetByIndex(uint256 recordIndex) external returns(address,ICashInI.Data memory);
   function GetLength() external returns(uint256);
   function GetPermission(uint256 index) external returns(address);
   function GetPermissionListLength() external returns(uint256);
   function HasPermission(address sender) external returns(bool);
   function IdList(uint256 ) external returns(address);
-  function Insert(ImainPBA.Data calldata) external returns(bool);
+  function Insert(ICashInI.Data calldata) external returns(bool);
   function Name() external returns(string memory);
   function RemovePermission(address addr) external returns(bool);
-  function Table(address ) external returns(ImainPBA.Data memory,uint256);
+  function Table(address ) external returns(ICashInI.Data memory,uint256);
   function TransferOwnership(address _newOwner) external returns(bool);
-  function Update(address recordId, ImainPBA.Data calldata) external returns(bool);
+  function Update(address recordId, ICashInI.Data calldata) external returns(bool);
   function newOwner() external returns(address);
   function owner() external returns(address);
   function permissionedList(uint256 ) external returns(address);
 }
-interface IMC {
+interface IMainContractor {
   struct Data {
     uint256 A_Added;
     string A_Role;
     string A_ID;
     string A_Contract;
-    address payable A_Address;
+    address payable A_Wallet;
   }
   function AcceptOwnership() external returns(bool);
   function AddPermission(address addr) external returns(bool);
   function Delete(address recordId) external returns(bool);
   function Exists(address recordId) external returns(bool);
-  function GetById(address recordId) external returns(uint256,IMC.Data memory);
-  function GetByIndex(uint256 recordIndex) external returns(address,IMC.Data memory);
+  function GetById(address recordId) external returns(uint256,IMainContractor.Data memory);
+  function GetByIndex(uint256 recordIndex) external returns(address,IMainContractor.Data memory);
   function GetLength() external returns(uint256);
   function GetPermission(uint256 index) external returns(address);
   function GetPermissionListLength() external returns(uint256);
   function HasPermission(address sender) external returns(bool);
   function IdList(uint256 ) external returns(address);
-  function Insert(IMC.Data calldata) external returns(bool);
+  function Insert(IMainContractor.Data calldata) external returns(bool);
   function Name() external returns(string memory);
   function RemovePermission(address addr) external returns(bool);
-  function Table(address ) external returns(IMC.Data memory,uint256);
+  function Table(address ) external returns(IMainContractor.Data memory,uint256);
   function TransferOwnership(address _newOwner) external returns(bool);
-  function Update(address recordId, IMC.Data calldata) external returns(bool);
+  function Update(address recordId, IMainContractor.Data calldata) external returns(bool);
+  function newOwner() external returns(address);
+  function owner() external returns(address);
+  function permissionedList(uint256 ) external returns(address);
+}
+interface ICashInRetention {
+  struct Data {
+    uint256 A_Created;
+    uint256 A_Retention;
+    uint256 A_Percent;
+    uint256 A_DLPmonths;
+    string A_Status;
+    uint256 A_ReleaseDate;
+    string A_PayCode;
+    address payable A_RetentionRecipient;
+    address A_CashInI_Pointer;
+  }
+  function AcceptOwnership() external returns(bool);
+  function AddPermission(address addr) external returns(bool);
+  function Delete(address recordId) external returns(bool);
+  function Exists(address recordId) external returns(bool);
+  function GetById(address recordId) external returns(uint256,ICashInRetention.Data memory,ICashInRetention.Data memory);
+  function GetByIndex(uint256 recordIndex) external returns(address,ICashInRetention.Data memory,ICashInRetention.Data memory);
+  function GetLength() external returns(uint256);
+  function GetPermission(uint256 index) external returns(address);
+  function GetPermissionListLength() external returns(uint256);
+  function HasPermission(address sender) external returns(bool);
+  function IdList(uint256 ) external returns(address);
+  function Insert(ICashInRetention.Data calldata) external returns(bool);
+  function Name() external returns(string memory);
+  function RemovePermission(address addr) external returns(bool);
+  function Table(address ) external returns(ICashInRetention.Data memory,uint256);
+  function TransferOwnership(address _newOwner) external returns(bool);
+  function Update(address recordId, ICashInRetention.Data calldata) external returns(bool);
   function newOwner() external returns(address);
   function owner() external returns(address);
   function permissionedList(uint256 ) external returns(address);
@@ -148,28 +187,30 @@ interface IMC {
 contract trigger is owned {
   using SafeMath for uint;
 
-  address mainPBAAddress = 0x7fdaC39251B63EE8078292E2B612B7fbb68DaA45;
-  address MCAddress = 0xBE88b614e8cDE058e7556c4a2F2C4304F26F30ba;
+  address CashInIAddress = 0x8A17A1fF265734D6ddF240f070a5090B8720F130;
+  address MainContractorAddress = 0xdC032b81464e64b3592335DF8185799283dC23c7;
+  address CashInRetentionAddress = 0x4c04b4d49428Ba359D2c2b61E9296D4a87747B3f;
 
   function invoke(address _recordId) public  returns(bool){
 
     //Instantiate Global Interfaces
-    ImainPBA mainPBA = ImainPBA(mainPBAAddress);
+    ICashInI CashInI = ICashInI(CashInIAddress);
 
     //Declare and Initialize Constant Interfaces
-    uint256 mainPBA_GetById_index;
-    ImainPBA.Data memory mainPBA_GetById_record;
-    (mainPBA_GetById_index,mainPBA_GetById_record) = mainPBA.GetById(_recordId);
+    uint256 CashInI_GetById_index;
+    ICashInI.Data memory CashInI_GetById_record;
+    (CashInI_GetById_index,CashInI_GetById_record) = CashInI.GetById(_recordId);
 
     //Required Payment Options
 
     //Invoke Required Condition Functions
       Condition0(msg.sender);
+      Condition1(CashInI_GetById_record.A_PBA);
 
     //Map Values to Action Interface
 
     //Execute Action
-    require(mainPBA.Delete(_recordId));
+    require(CashInI.Delete(_recordId));
 
     //Return Success
     return true;
@@ -177,16 +218,16 @@ contract trigger is owned {
 
   //Condition Functions
   function Condition0(address _msgSenderBase) private  {
-        IMC MC = IMC(MCAddress);
+        IMainContractor MainContractor = IMainContractor(MainContractorAddress);
         bool contains = false;
 
-        for(uint x = 0; x < MC.GetLength(); x++){
+        for(uint x = 0; x < MainContractor.GetLength(); x++){
 
-          address MC_GetByIndex_recordId;
-          IMC.Data memory MC_GetByIndex_record;
-          (MC_GetByIndex_recordId,MC_GetByIndex_record) = MC.GetByIndex(x);
+          address MainContractor_GetByIndex_recordId;
+          IMainContractor.Data memory MainContractor_GetByIndex_record;
+          (MainContractor_GetByIndex_recordId,MainContractor_GetByIndex_record) = MainContractor.GetByIndex(x);
 
-            if(_msgSenderBase == MC_GetByIndex_record.A_Address){
+            if(_msgSenderBase == MainContractor_GetByIndex_record.A_Wallet){
               contains = true;
               break;
             }
@@ -195,6 +236,27 @@ contract trigger is owned {
 
         require(contains);
 
+  }
+  function Condition1(address CBA_PBA) private  {
+        ICashInRetention CashInRetention = ICashInRetention(CashInRetentionAddress);
+        bool contains = false;
+
+        for(uint x = 0; x < CashInRetention.GetLength(); x++){
+
+          address CashInRetention_GetByIndex_recordId;
+          ICashInRetention.Data memory CashInRetention_GetByIndex_record;
+          ICashInRetention.Data memory CashInRetention_GetByIndex_R_CashInI_Data;
+          (CashInRetention_GetByIndex_recordId,CashInRetention_GetByIndex_record,CashInRetention_GetByIndex_R_CashInI_Data) = CashInRetention.GetByIndex(x);
+
+            if(CBA_PBA == CashInRetention_GetByIndex_record.A_RetentionRecipient){
+              contains = true;
+              
+            }
+
+        }
+
+        require(!contains);
+        
   }
 
 
