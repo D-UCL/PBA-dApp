@@ -1,7 +1,7 @@
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
-//Name: MC_Del
+//Name: CashOut_MC_Del_001
 //Description: 
 
 contract owned {
@@ -81,60 +81,97 @@ contract owned {
   }
 }
 
-interface IMC {
+interface ICashoutII {
   struct Data {
     uint256 A_Added;
     string A_Role;
-    string A_ID;
+    uint256 A_ID;
     string A_Contract;
-    address payable A_Address;
+    string A_Works;
+    uint256 A_Revision;
+    uint256 A_Start;
+    uint256 A_End;
+    uint256 A_Planned;
+    uint256 A_Actual;
+    string A_CostCode;
+    string A_Status;
+    uint256 A_PercentageComp;
+    uint256 A_DaysBehind;
+    uint256 A_LastUpdate;
+    address payable A_Payee;
   }
   function AcceptOwnership() external returns(bool);
   function AddPermission(address addr) external returns(bool);
   function Delete(address recordId) external returns(bool);
   function Exists(address recordId) external returns(bool);
-  function GetById(address recordId) external returns(uint256,IMC.Data memory);
-  function GetByIndex(uint256 recordIndex) external returns(address,IMC.Data memory);
+  function GetById(address recordId) external returns(uint256,ICashoutII.Data memory);
+  function GetByIndex(uint256 recordIndex) external returns(address,ICashoutII.Data memory);
   function GetLength() external returns(uint256);
   function GetPermission(uint256 index) external returns(address);
   function GetPermissionListLength() external returns(uint256);
   function HasPermission(address sender) external returns(bool);
   function IdList(uint256 ) external returns(address);
-  function Insert(IMC.Data calldata) external returns(bool);
+  function Insert(ICashoutII.Data calldata) external returns(bool);
   function Name() external returns(string memory);
   function RemovePermission(address addr) external returns(bool);
-  function Table(address ) external returns(IMC.Data memory,uint256);
+  function Table(address ) external returns(ICashoutII.Data memory,uint256);
   function TransferOwnership(address _newOwner) external returns(bool);
-  function Update(address recordId, IMC.Data calldata) external returns(bool);
+  function Update(address recordId, ICashoutII.Data calldata) external returns(bool);
   function newOwner() external returns(address);
   function owner() external returns(address);
   function permissionedList(uint256 ) external returns(address);
 }
-interface IPM {
+interface IMainContractor {
   struct Data {
     uint256 A_Added;
     string A_Role;
     string A_ID;
     string A_Contract;
-    address payable A_Address;
+    address payable A_Wallet;
   }
   function AcceptOwnership() external returns(bool);
   function AddPermission(address addr) external returns(bool);
   function Delete(address recordId) external returns(bool);
   function Exists(address recordId) external returns(bool);
-  function GetById(address recordId) external returns(uint256,IPM.Data memory);
-  function GetByIndex(uint256 recordIndex) external returns(address,IPM.Data memory);
+  function GetById(address recordId) external returns(uint256,IMainContractor.Data memory);
+  function GetByIndex(uint256 recordIndex) external returns(address,IMainContractor.Data memory);
   function GetLength() external returns(uint256);
   function GetPermission(uint256 index) external returns(address);
   function GetPermissionListLength() external returns(uint256);
   function HasPermission(address sender) external returns(bool);
   function IdList(uint256 ) external returns(address);
-  function Insert(IPM.Data calldata) external returns(bool);
+  function Insert(IMainContractor.Data calldata) external returns(bool);
   function Name() external returns(string memory);
   function RemovePermission(address addr) external returns(bool);
-  function Table(address ) external returns(IPM.Data memory,uint256);
+  function Table(address ) external returns(IMainContractor.Data memory,uint256);
   function TransferOwnership(address _newOwner) external returns(bool);
-  function Update(address recordId, IPM.Data calldata) external returns(bool);
+  function Update(address recordId, IMainContractor.Data calldata) external returns(bool);
+  function newOwner() external returns(address);
+  function owner() external returns(address);
+  function permissionedList(uint256 ) external returns(address);
+}
+interface ISubcWorksII {
+  struct Data {
+    address payable A_Address;
+    address A_CashoutII_Pointer;
+  }
+  function AcceptOwnership() external returns(bool);
+  function AddPermission(address addr) external returns(bool);
+  function Delete(address recordId) external returns(bool);
+  function Exists(address recordId) external returns(bool);
+  function GetById(address recordId) external returns(uint256,ISubcWorksII.Data memory,ISubcWorksII.Data memory);
+  function GetByIndex(uint256 recordIndex) external returns(address,ISubcWorksII.Data memory,ISubcWorksII.Data memory);
+  function GetLength() external returns(uint256);
+  function GetPermission(uint256 index) external returns(address);
+  function GetPermissionListLength() external returns(uint256);
+  function HasPermission(address sender) external returns(bool);
+  function IdList(uint256 ) external returns(address);
+  function Insert(ISubcWorksII.Data calldata) external returns(bool);
+  function Name() external returns(string memory);
+  function RemovePermission(address addr) external returns(bool);
+  function Table(address ) external returns(ISubcWorksII.Data memory,uint256);
+  function TransferOwnership(address _newOwner) external returns(bool);
+  function Update(address recordId, ISubcWorksII.Data calldata) external returns(bool);
   function newOwner() external returns(address);
   function owner() external returns(address);
   function permissionedList(uint256 ) external returns(address);
@@ -143,28 +180,30 @@ interface IPM {
 contract trigger is owned {
   using SafeMath for uint;
 
-  address MCAddress = 0xBE88b614e8cDE058e7556c4a2F2C4304F26F30ba;
-  address PMAddress = 0x119b81e3f96191ba01e516A3a50ee8fD25e09178;
+  address CashoutIIAddress = 0xbb93F9eA1BaB92F71EF8A796f75ce586aC85AAb6;
+  address MainContractorAddress = 0xdC032b81464e64b3592335DF8185799283dC23c7;
+  address SubcWorksIIAddress = 0x17e183D7457713483001156994A9ECe3458d03B8;
 
   function invoke(address _recordId) public  returns(bool){
 
     //Instantiate Global Interfaces
-    IMC MC = IMC(MCAddress);
+    ICashoutII CashoutII = ICashoutII(CashoutIIAddress);
 
     //Declare and Initialize Constant Interfaces
-    uint256 MC_GetById_index;
-    IMC.Data memory MC_GetById_record;
-    (MC_GetById_index,MC_GetById_record) = MC.GetById(_recordId);
+    uint256 CashoutII_GetById_index;
+    ICashoutII.Data memory CashoutII_GetById_record;
+    (CashoutII_GetById_index,CashoutII_GetById_record) = CashoutII.GetById(_recordId);
 
     //Required Payment Options
 
     //Invoke Required Condition Functions
       Condition0(msg.sender);
+      Condition1(CashoutII_GetById_record.A_Payee);
 
     //Map Values to Action Interface
 
     //Execute Action
-    require(MC.Delete(_recordId));
+    require(CashoutII.Delete(_recordId));
 
     //Return Success
     return true;
@@ -172,16 +211,16 @@ contract trigger is owned {
 
   //Condition Functions
   function Condition0(address _msgSenderBase) private  {
-        IPM PM = IPM(PMAddress);
+        IMainContractor MainContractor = IMainContractor(MainContractorAddress);
         bool contains = false;
 
-        for(uint x = 0; x < PM.GetLength(); x++){
+        for(uint x = 0; x < MainContractor.GetLength(); x++){
 
-          address PM_GetByIndex_recordId;
-          IPM.Data memory PM_GetByIndex_record;
-          (PM_GetByIndex_recordId,PM_GetByIndex_record) = PM.GetByIndex(x);
+          address MainContractor_GetByIndex_recordId;
+          IMainContractor.Data memory MainContractor_GetByIndex_record;
+          (MainContractor_GetByIndex_recordId,MainContractor_GetByIndex_record) = MainContractor.GetByIndex(x);
 
-            if(_msgSenderBase == PM_GetByIndex_record.A_Address){
+            if(_msgSenderBase == MainContractor_GetByIndex_record.A_Wallet){
               contains = true;
               break;
             }
@@ -190,6 +229,27 @@ contract trigger is owned {
 
         require(contains);
 
+  }
+  function Condition1(address CBA_Payee) private  {
+        ISubcWorksII SubcWorksII = ISubcWorksII(SubcWorksIIAddress);
+        bool contains = false;
+
+        for(uint x = 0; x < SubcWorksII.GetLength(); x++){
+
+          address SubcWorksII_GetByIndex_recordId;
+          ISubcWorksII.Data memory SubcWorksII_GetByIndex_record;
+          ISubcWorksII.Data memory SubcWorksII_GetByIndex_R_CashoutII_Data;
+          (SubcWorksII_GetByIndex_recordId,SubcWorksII_GetByIndex_record,SubcWorksII_GetByIndex_R_CashoutII_Data) = SubcWorksII.GetByIndex(x);
+
+            if(CBA_Payee == SubcWorksII_GetByIndex_record.A_Address){
+              contains = true;
+              
+            }
+
+        }
+
+        require(!contains);
+        
   }
 
 
