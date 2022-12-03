@@ -1,7 +1,7 @@
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
-//Name: MC_Ins
+//Name: MC_Ins_001
 //Description: 
 
 contract owned {
@@ -81,60 +81,60 @@ contract owned {
   }
 }
 
-interface IMC {
+interface IMainContractor {
   struct Data {
     uint256 A_Added;
     string A_Role;
     string A_ID;
     string A_Contract;
-    address payable A_Address;
+    address payable A_Wallet;
   }
   function AcceptOwnership() external returns(bool);
   function AddPermission(address addr) external returns(bool);
   function Delete(address recordId) external returns(bool);
   function Exists(address recordId) external returns(bool);
-  function GetById(address recordId) external returns(uint256,IMC.Data memory);
-  function GetByIndex(uint256 recordIndex) external returns(address,IMC.Data memory);
+  function GetById(address recordId) external returns(uint256,IMainContractor.Data memory);
+  function GetByIndex(uint256 recordIndex) external returns(address,IMainContractor.Data memory);
   function GetLength() external returns(uint256);
   function GetPermission(uint256 index) external returns(address);
   function GetPermissionListLength() external returns(uint256);
   function HasPermission(address sender) external returns(bool);
   function IdList(uint256 ) external returns(address);
-  function Insert(IMC.Data calldata) external returns(bool);
+  function Insert(IMainContractor.Data calldata) external returns(bool);
   function Name() external returns(string memory);
   function RemovePermission(address addr) external returns(bool);
-  function Table(address ) external returns(IMC.Data memory,uint256);
+  function Table(address ) external returns(IMainContractor.Data memory,uint256);
   function TransferOwnership(address _newOwner) external returns(bool);
-  function Update(address recordId, IMC.Data calldata) external returns(bool);
+  function Update(address recordId, IMainContractor.Data calldata) external returns(bool);
   function newOwner() external returns(address);
   function owner() external returns(address);
   function permissionedList(uint256 ) external returns(address);
 }
-interface IPM {
+interface IProjectManager {
   struct Data {
     uint256 A_Added;
     string A_Role;
     string A_ID;
     string A_Contract;
-    address payable A_Address;
+    address payable A_Wallet;
   }
   function AcceptOwnership() external returns(bool);
   function AddPermission(address addr) external returns(bool);
   function Delete(address recordId) external returns(bool);
   function Exists(address recordId) external returns(bool);
-  function GetById(address recordId) external returns(uint256,IPM.Data memory);
-  function GetByIndex(uint256 recordIndex) external returns(address,IPM.Data memory);
+  function GetById(address recordId) external returns(uint256,IProjectManager.Data memory);
+  function GetByIndex(uint256 recordIndex) external returns(address,IProjectManager.Data memory);
   function GetLength() external returns(uint256);
   function GetPermission(uint256 index) external returns(address);
   function GetPermissionListLength() external returns(uint256);
   function HasPermission(address sender) external returns(bool);
   function IdList(uint256 ) external returns(address);
-  function Insert(IPM.Data calldata) external returns(bool);
+  function Insert(IProjectManager.Data calldata) external returns(bool);
   function Name() external returns(string memory);
   function RemovePermission(address addr) external returns(bool);
-  function Table(address ) external returns(IPM.Data memory,uint256);
+  function Table(address ) external returns(IProjectManager.Data memory,uint256);
   function TransferOwnership(address _newOwner) external returns(bool);
-  function Update(address recordId, IPM.Data calldata) external returns(bool);
+  function Update(address recordId, IProjectManager.Data calldata) external returns(bool);
   function newOwner() external returns(address);
   function owner() external returns(address);
   function permissionedList(uint256 ) external returns(address);
@@ -143,13 +143,13 @@ interface IPM {
 contract trigger is owned {
   using SafeMath for uint;
 
-  address MCAddress = 0xBE88b614e8cDE058e7556c4a2F2C4304F26F30ba;
-  address PMAddress = 0x119b81e3f96191ba01e516A3a50ee8fD25e09178;
+  address MainContractorAddress = 0xdC032b81464e64b3592335DF8185799283dC23c7;
+  address ProjectManagerAddress = 0x8407E90a59583e1241D7158ee0488733a302a9CC;
 
-  function invoke(IMC.Data memory MC_Data) public  returns(bool){
+  function invoke(IMainContractor.Data memory MainContractor_Data) public  returns(bool){
 
     //Instantiate Global Interfaces
-    IMC MC = IMC(MCAddress);
+    IMainContractor MainContractor = IMainContractor(MainContractorAddress);
 
     //Declare and Initialize Constant Interfaces
 
@@ -159,13 +159,13 @@ contract trigger is owned {
       Condition0(msg.sender);
 
     //Map Values to Action Interface
-    MC_Data.A_Added = block.timestamp * 1000;
-    MC_Data.A_Role = 'Main contractor';
-    MC_Data.A_ID = '003';
-    MC_Data.A_Contract = '/MC.pdf';
+    MainContractor_Data.A_Added = block.timestamp * 1000;
+    MainContractor_Data.A_Role = 'Main contractor';
+    MainContractor_Data.A_ID = '003';
+    MainContractor_Data.A_Contract = '/MC.pdf';
 
     //Execute Action
-    require(MC.Insert(MC_Data));
+    require(MainContractor.Insert(MainContractor_Data));
 
     //Return Success
     return true;
@@ -173,16 +173,16 @@ contract trigger is owned {
 
   //Condition Functions
   function Condition0(address _msgSenderBase) private  {
-        IPM PM = IPM(PMAddress);
+        IProjectManager ProjectManager = IProjectManager(ProjectManagerAddress);
         bool contains = false;
 
-        for(uint x = 0; x < PM.GetLength(); x++){
+        for(uint x = 0; x < ProjectManager.GetLength(); x++){
 
-          address PM_GetByIndex_recordId;
-          IPM.Data memory PM_GetByIndex_record;
-          (PM_GetByIndex_recordId,PM_GetByIndex_record) = PM.GetByIndex(x);
+          address ProjectManager_GetByIndex_recordId;
+          IProjectManager.Data memory ProjectManager_GetByIndex_record;
+          (ProjectManager_GetByIndex_recordId,ProjectManager_GetByIndex_record) = ProjectManager.GetByIndex(x);
 
-            if(_msgSenderBase == PM_GetByIndex_record.A_Address){
+            if(_msgSenderBase == ProjectManager_GetByIndex_record.A_Wallet){
               contains = true;
               break;
             }
