@@ -1,7 +1,7 @@
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
-//Name: Sub_insert
+//Name: Sub_insert_002
 //Description: 
 
 contract owned {
@@ -81,60 +81,60 @@ contract owned {
   }
 }
 
-interface ISubC {
+interface ISubcontractor {
   struct Data {
     uint256 A_Added;
     string A_Role;
     string A_ID;
     string A_Contract;
-    address payable A_Address;
+    address payable A_Wallet;
   }
   function AcceptOwnership() external returns(bool);
   function AddPermission(address addr) external returns(bool);
   function Delete(address recordId) external returns(bool);
   function Exists(address recordId) external returns(bool);
-  function GetById(address recordId) external returns(uint256,ISubC.Data memory);
-  function GetByIndex(uint256 recordIndex) external returns(address,ISubC.Data memory);
+  function GetById(address recordId) external returns(uint256,ISubcontractor.Data memory);
+  function GetByIndex(uint256 recordIndex) external returns(address,ISubcontractor.Data memory);
   function GetLength() external returns(uint256);
   function GetPermission(uint256 index) external returns(address);
   function GetPermissionListLength() external returns(uint256);
   function HasPermission(address sender) external returns(bool);
   function IdList(uint256 ) external returns(address);
-  function Insert(ISubC.Data calldata) external returns(bool);
+  function Insert(ISubcontractor.Data calldata) external returns(bool);
   function Name() external returns(string memory);
   function RemovePermission(address addr) external returns(bool);
-  function Table(address ) external returns(ISubC.Data memory,uint256);
+  function Table(address ) external returns(ISubcontractor.Data memory,uint256);
   function TransferOwnership(address _newOwner) external returns(bool);
-  function Update(address recordId, ISubC.Data calldata) external returns(bool);
+  function Update(address recordId, ISubcontractor.Data calldata) external returns(bool);
   function newOwner() external returns(address);
   function owner() external returns(address);
   function permissionedList(uint256 ) external returns(address);
 }
-interface IMC {
+interface IMainContractor {
   struct Data {
     uint256 A_Added;
     string A_Role;
     string A_ID;
     string A_Contract;
-    address payable A_Address;
+    address payable A_Wallet;
   }
   function AcceptOwnership() external returns(bool);
   function AddPermission(address addr) external returns(bool);
   function Delete(address recordId) external returns(bool);
   function Exists(address recordId) external returns(bool);
-  function GetById(address recordId) external returns(uint256,IMC.Data memory);
-  function GetByIndex(uint256 recordIndex) external returns(address,IMC.Data memory);
+  function GetById(address recordId) external returns(uint256,IMainContractor.Data memory);
+  function GetByIndex(uint256 recordIndex) external returns(address,IMainContractor.Data memory);
   function GetLength() external returns(uint256);
   function GetPermission(uint256 index) external returns(address);
   function GetPermissionListLength() external returns(uint256);
   function HasPermission(address sender) external returns(bool);
   function IdList(uint256 ) external returns(address);
-  function Insert(IMC.Data calldata) external returns(bool);
+  function Insert(IMainContractor.Data calldata) external returns(bool);
   function Name() external returns(string memory);
   function RemovePermission(address addr) external returns(bool);
-  function Table(address ) external returns(IMC.Data memory,uint256);
+  function Table(address ) external returns(IMainContractor.Data memory,uint256);
   function TransferOwnership(address _newOwner) external returns(bool);
-  function Update(address recordId, IMC.Data calldata) external returns(bool);
+  function Update(address recordId, IMainContractor.Data calldata) external returns(bool);
   function newOwner() external returns(address);
   function owner() external returns(address);
   function permissionedList(uint256 ) external returns(address);
@@ -143,13 +143,13 @@ interface IMC {
 contract trigger is owned {
   using SafeMath for uint;
 
-  address SubCAddress = 0xB214ffbBAeAF5271B626216D2Fdbb48e3b93CaC4;
-  address MCAddress = 0xBE88b614e8cDE058e7556c4a2F2C4304F26F30ba;
+  address SubcontractorAddress = 0x513E81F9CC57B65113D5216e5fC3ef1e7784EFFC;
+  address MainContractorAddress = 0xdC032b81464e64b3592335DF8185799283dC23c7;
 
-  function invoke(ISubC.Data memory SubC_Data) public  returns(bool){
+  function invoke(ISubcontractor.Data memory Subcontractor_Data) public  returns(bool){
 
     //Instantiate Global Interfaces
-    ISubC SubC = ISubC(SubCAddress);
+    ISubcontractor Subcontractor = ISubcontractor(SubcontractorAddress);
 
     //Declare and Initialize Constant Interfaces
 
@@ -159,11 +159,11 @@ contract trigger is owned {
       Condition0(msg.sender);
 
     //Map Values to Action Interface
-    SubC_Data.A_Added = block.timestamp * 1000;
-    SubC_Data.A_Contract = 'TBC';
+    Subcontractor_Data.A_Added = block.timestamp * 1000;
+    Subcontractor_Data.A_Contract = '/Sub.pdf';
 
     //Execute Action
-    require(SubC.Insert(SubC_Data));
+    require(Subcontractor.Insert(Subcontractor_Data));
 
     //Return Success
     return true;
@@ -171,16 +171,16 @@ contract trigger is owned {
 
   //Condition Functions
   function Condition0(address _msgSenderBase) private  {
-        IMC MC = IMC(MCAddress);
+        IMainContractor MainContractor = IMainContractor(MainContractorAddress);
         bool contains = false;
 
-        for(uint x = 0; x < MC.GetLength(); x++){
+        for(uint x = 0; x < MainContractor.GetLength(); x++){
 
-          address MC_GetByIndex_recordId;
-          IMC.Data memory MC_GetByIndex_record;
-          (MC_GetByIndex_recordId,MC_GetByIndex_record) = MC.GetByIndex(x);
+          address MainContractor_GetByIndex_recordId;
+          IMainContractor.Data memory MainContractor_GetByIndex_record;
+          (MainContractor_GetByIndex_recordId,MainContractor_GetByIndex_record) = MainContractor.GetByIndex(x);
 
-            if(_msgSenderBase == MC_GetByIndex_record.A_Address){
+            if(_msgSenderBase == MainContractor_GetByIndex_record.A_Wallet){
               contains = true;
               break;
             }
