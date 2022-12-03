@@ -86,14 +86,20 @@ contract dtable is owned {
 
   struct Data {
     uint A_Added;
-    string A_Milestone;
-    string A_Revision;
+    string A_Role;
+    uint A_ID;
+    string A_Contract;
+    uint A_Milestone;
+    uint A_Revision;
+    uint A_Start;
+    uint A_End;
     uint A_Planned;
     uint A_Actual;
-    string A_Schedule;
+    string A_CostCode;
     string A_Status;
-    uint A_From;
-    uint A_To;
+    uint A_PercentageComp;
+    uint A_DaysBehind;
+    uint A_Updated;
     address A_PBA;
   }
   struct Record {
@@ -103,7 +109,7 @@ contract dtable is owned {
 
   mapping(address => Record) public Table;
   address[] public IdList;
-  string public Name = "mainPBA";
+  string public Name = "CashInI";
 
   function Exists(address recordId) public view returns(bool exists) {
     if (IdList.length == 0) return false;
