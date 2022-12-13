@@ -1,7 +1,7 @@
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
-//Name: C_Ins_003
+//Name: C_Ins_002
 //Description: 
 
 contract owned {
@@ -110,39 +110,11 @@ interface IClient {
   function owner() external returns(address);
   function permissionedList(uint256 ) external returns(address);
 }
-interface IKYC {
-  struct Data {
-    uint256 A_Added;
-    string A_Reference;
-    address payable A_Wallet;
-  }
-  function AcceptOwnership() external returns(bool);
-  function AddPermission(address addr) external returns(bool);
-  function Delete(address recordId) external returns(bool);
-  function Exists(address recordId) external returns(bool);
-  function GetById(address recordId) external returns(uint256,IKYC.Data memory);
-  function GetByIndex(uint256 recordIndex) external returns(address,IKYC.Data memory);
-  function GetLength() external returns(uint256);
-  function GetPermission(uint256 index) external returns(address);
-  function GetPermissionListLength() external returns(uint256);
-  function HasPermission(address sender) external returns(bool);
-  function IdList(uint256 ) external returns(address);
-  function Insert(IKYC.Data calldata) external returns(bool);
-  function Name() external returns(string memory);
-  function RemovePermission(address addr) external returns(bool);
-  function Table(address ) external returns(IKYC.Data memory,uint256);
-  function TransferOwnership(address _newOwner) external returns(bool);
-  function Update(address recordId, IKYC.Data calldata) external returns(bool);
-  function newOwner() external returns(address);
-  function owner() external returns(address);
-  function permissionedList(uint256 ) external returns(address);
-}
 
 contract trigger is owned {
   using SafeMath for uint;
 
   address ClientAddress = 0x6Ad768315a7fabca8F8D8Ea475B745532043963B;
-  address KYCAddress = 0x4E94C4f9f309D9E59054b35A32A768D87F7C2883;
 
   function invoke(IClient.Data memory Client_Data) public  returns(bool){
 
@@ -154,11 +126,10 @@ contract trigger is owned {
     //Required Payment Options
 
     //Invoke Required Condition Functions
-      Condition0(msg.sender);
 
     //Map Values to Action Interface
     Client_Data.A_Added = block.timestamp * 1000;
-    Client_Data.A_Role = 'Project client';
+    Client_Data.A_Role = 'Client';
     Client_Data.A_ID = '001';
     Client_Data.A_Contract = '/C.pdf';
     Client_Data.A_Wallet = payable(msg.sender);
@@ -171,26 +142,6 @@ contract trigger is owned {
   }
 
   //Condition Functions
-  function Condition0(address _msgSenderBase) private  {
-        IKYC KYC = IKYC(KYCAddress);
-        bool contains = false;
-
-        for(uint x = 0; x < KYC.GetLength(); x++){
-
-          address KYC_GetByIndex_recordId;
-          IKYC.Data memory KYC_GetByIndex_record;
-          (KYC_GetByIndex_recordId,KYC_GetByIndex_record) = KYC.GetByIndex(x);
-
-            if(_msgSenderBase == KYC_GetByIndex_record.A_Wallet){
-              contains = true;
-              break;
-            }
-
-        }
-
-        require(contains);
-
-  }
 
 
 }
