@@ -1,4 +1,4 @@
 # PBA-dApp
-Project bank account (PBA) decentralised test-app for making payments in the construction industry. 
+Project blockchain account test-app for managing payments in a construction project. 
 
 TBC...
