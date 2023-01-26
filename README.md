@@ -1,2 +1,2 @@
 # PBA-dApp
-Project blockchain decentralised application
+Project Blockchain App
