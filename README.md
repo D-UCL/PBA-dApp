@@ -1,2 +1,2 @@
 # PBA-dApp
-Project BLOCKCHAIN account test-dApp.
+Project blockchain decentralised application
