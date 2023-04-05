@@ -1,3 +1,6 @@
+//Description: This SC table enables project participants to manage cash-in retentions.
+//Etherscan address: https://goerli.etherscan.io/address/0x4c04b4d49428Ba359D2c2b61E9296D4a87747B3f
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
