@@ -1,3 +1,6 @@
+//Description: This SC table allows project validators to insert and manage payment guarantees.
+//Etherscan address: https://goerli.etherscan.io/address/0x6b523f552a737286AC2aA25511E73B41aB26091c
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
