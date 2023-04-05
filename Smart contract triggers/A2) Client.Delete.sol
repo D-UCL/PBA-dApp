@@ -1,8 +1,11 @@
+//Description: Clients can unappoint themselves by removing their address from SC table A: Client.
+//SC conditions: User’s address is in SC table A: Client.
+//Etherscan address: https://goerli.etherscan.io/address/0x2fB5E99Fe3D1ac5d1AAd7A11cdBF401f7c84B209
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: C_Del_001
-//Description: 
 
 contract owned {
   address public owner;
