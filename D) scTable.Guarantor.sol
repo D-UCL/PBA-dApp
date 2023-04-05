@@ -1,7 +1,6 @@
 //Description: This SC table holds the wallet address of the guarantor.
 //Etherscan address: https://goerli.etherscan.io/address/0x9813904e03Fe98c57Eb4184bF3dF0C738751b09a
 
-
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
