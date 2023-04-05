@@ -1,8 +1,11 @@
+//Description: Allows anyone to act on behalf of the client to insert themselves into the proposed application.
+//SC conditions: For testing purposes, no conditions were set for this trigger.
+//Etherscan address: https://goerli.etherscan.io/address/0x964BB2e0730CB81cB3B636695cf90db839A3b29a
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: C_Ins_002
-//Description: 
 
 contract owned {
   address public owner;
