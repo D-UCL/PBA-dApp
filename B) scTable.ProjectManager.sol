@@ -1,3 +1,6 @@
+//Description: This SC table holds the wallet address of the project manager.
+//Etherscan address: https://goerli.etherscan.io/address/0x8407E90a59583e1241D7158ee0488733a302a9CC
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
