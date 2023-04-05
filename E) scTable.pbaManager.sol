@@ -1,3 +1,6 @@
+//Description: This SC table holds the wallet address of the PBA manager.
+//Etherscan address: https://goerli.etherscan.io/address/0xB3832720d2dDd6603585f65771F5BA7a2a799E10
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
