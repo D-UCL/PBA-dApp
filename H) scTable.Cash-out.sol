@@ -1,3 +1,6 @@
+//Description: This SC table holds the entire cash-out schedule of the project.
+//Etherscan address: https://goerli.etherscan.io/address/0xbb93F9eA1BaB92F71EF8A796f75ce586aC85AAb6
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
