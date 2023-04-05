@@ -1,3 +1,6 @@
+//Description: This SC table allows subcontractors to filter and pull their scheduled works (in read-only format) from SC table H.
+//Etherscan address: https://goerli.etherscan.io/address/0x17e183D7457713483001156994A9ECe3458d03B8
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
