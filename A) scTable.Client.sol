@@ -1,3 +1,6 @@
+//Description: This SC table holds the wallet address of the client.
+//Etherscan address: https://goerli.etherscan.io/address/0x6Ad768315a7fabca8F8D8Ea475B745532043963B
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
