@@ -1,3 +1,6 @@
+//Description: This SC table holds the wallet address of the subcontractors.
+//Etherscan address: https://goerli.etherscan.io/address/0x513E81F9CC57B65113D5216e5fC3ef1e7784EFFC
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
