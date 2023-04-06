@@ -1,8 +1,11 @@
+//Description: Allows the MC to insert the cash-in schedule into SC table G: Cash-in schedule.
+//SC conditions: User’s address is in SC table C: Main contractor.
+//Etherscan address: https://goerli.etherscan.io/address/0xB3224f9f2FFEdc68140f12867c70260A70C72284
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: CashIn_Ins_002
-//Description: 
 
 contract owned {
   address public owner;
