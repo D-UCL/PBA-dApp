@@ -1,8 +1,11 @@
+//Description: Allows the client to execute a cash-in payment by updating SC table G: Cash-in.
+//SC conditions: User’s address is in SC table A: Client.
+//Etherscan address: https://goerli.etherscan.io/address/0x8E2F31968cd6c626adD119Eb883262533a6B2Da3
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: CashIn_C_Update_Pay_002
-//Description: 
 
 contract owned {
   address public owner;
