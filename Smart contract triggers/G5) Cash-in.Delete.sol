@@ -1,8 +1,11 @@
+//Description: Allows the MC to remove a cash-in record from SC table G: cash-in, & ensure that the PBA cannot be removed while they have records stored in SC tables J & L (because it causes the smart contract to malfunction).
+//SC conditions: User’s address is in SC table C: Main contractor, & PBAs address is not in SC table L: Cash-in retention.
+//Etherscan address: https://goerli.etherscan.io/address/0x6b4eaCa91cF7519Fe2170517Cc7ad45Eee678d4C
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: CashIn_C_Del_004
-//Description: 
 
 contract owned {
   address public owner;
