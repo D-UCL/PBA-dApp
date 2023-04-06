@@ -1,8 +1,11 @@
+//Description: Allows the client to execute the cash-in retention payment by updating SC table L4.
+//SC conditions: User’s address is in SC table A: Client.
+//Etherscan address: https://goerli.etherscan.io/address/0xccC6Ba989be52A6fbfBF0fF04e786eD17c59F223
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: CashinRetention_Paid
-//Description: 
 
 contract owned {
   address public owner;
