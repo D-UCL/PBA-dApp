@@ -1,8 +1,11 @@
+//Description: Allows the client to unappoint the PM by removing the PM’s address from SC table B: Project manager.
+//SC conditions: User’s address is in SC table A: Client.
+//Etherscan address: https://goerli.etherscan.io/address/0xd9d396f1C4E7Ed80da572A27bC5a2EdA73211807
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: PM_Del_001
-//Description: 
 
 contract owned {
   address public owner;
