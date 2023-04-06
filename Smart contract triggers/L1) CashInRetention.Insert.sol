@@ -1,8 +1,11 @@
+//Description: Allows the PBA manager to register the cash-in retention by interacting with SC table L1.
+//SC conditions: User’s address is in SC table E: pbaManager.
+//Etherscan address: https://goerli.etherscan.io/address/0x17610f39fD29741b719d5845323594EBFEE7C28F
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: CashinRetention_Insert
-//Description: 
 
 contract owned {
   address public owner;
