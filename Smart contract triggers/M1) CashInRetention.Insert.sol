@@ -1,8 +1,11 @@
+//Description: Allows the subcontractors to register the cash-out retention by interacting with SC table M1.
+//SC conditions: User’s address is in SC table F: Subcontractor.
+//Etherscan address: https://goerli.etherscan.io/address/0xe4CEFC9D7a6d33ce9590b634F4667df22C956078
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: CashOutRetention_Insert
-//Description: 
 
 contract owned {
   address public owner;
