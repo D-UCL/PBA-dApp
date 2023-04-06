@@ -1,8 +1,11 @@
+//Description: Enables the subs’ to update SC table H: Cash-out to alert tier-one parties that they have completed works on-site.
+//SC conditions: User’s address is in SC table F: Subcontractor.
+//Etherscan address: https://goerli.etherscan.io/address/0x2953cD74aD335D5a0F87c907beA5439D49B47404
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: CashOut_Sub_Update_Accept
-//Description: 
 
 contract owned {
   address public owner;
