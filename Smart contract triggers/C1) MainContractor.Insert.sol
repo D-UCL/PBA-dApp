@@ -1,8 +1,11 @@
+//Description: Allows the PM to appoint the main contractor (MC) by inserting the MC’s address into SC table C: Main contractor.
+//SC conditions: User’s address is in SC table B: Project manager.
+//Etherscan address: https://goerli.etherscan.io/address/0x0E6BE714fac33bc9E1a831e952907Ee6FC9b03cc
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: MC_Ins_001
-//Description: 
 
 contract owned {
   address public owner;
