@@ -1,8 +1,11 @@
+//Description: Allows the PM to unappoint the MC by deleting the MC’s address from SC table C: Main contractor.
+//SC conditions: User’s address is in SC table B: Project manager.
+//Etherscan address: https://goerli.etherscan.io/address/0x4C7f29Cf2D6d01f88f7b52ABE12b148D8b2a82a0
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: CashOut_MC_Del_001
-//Description: 
 
 contract owned {
   address public owner;
