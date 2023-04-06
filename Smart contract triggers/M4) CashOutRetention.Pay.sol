@@ -1,8 +1,11 @@
+//Description: Allows the MC to execute the cash-in retention payment by updating SC table M4.
+//SC conditions: User’s address is in SC table C: Main contractor.
+//Etherscan address: https://goerli.etherscan.io/address/0x630Eb04B3C5cFFd41B5e55a8F0Eda8B182008609
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: CashOutRetention_Paid
-//Description: 
 
 contract owned {
   address public owner;
