@@ -1,8 +1,11 @@
+//Description: Enables the PBA manager to execute a cash-out payment from SC table E: PBA.
+//SC conditions: User’s address is in SC table E: PBA manager. 
+//Etherscan address: https://goerli.etherscan.io/address/0x5f08C8889514173138797cF9F43f353C4CB498e2
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: CashOut_PBA_Pay
-//Description: 
 
 contract owned {
   address public owner;
