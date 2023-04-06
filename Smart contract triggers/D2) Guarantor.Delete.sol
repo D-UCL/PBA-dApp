@@ -1,8 +1,11 @@
+//Description: Allows the PM to unappoint the G by deleting the G’s address from SC table D: Guarantor.
+//SC conditions: User’s address is in SC table B: Project manager.
+//Etherscan address: https://goerli.etherscan.io/address/0xE4BeBF09b18f857A7ec01bb594562AE0c2e63bC8
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: Guarantor_del
-//Description: 
 
 contract owned {
   address public owner;
