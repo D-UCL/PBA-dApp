@@ -1,8 +1,11 @@
+//Description: Allows the PM to appoint the guarantor (G) by inserting the G’s address into SC table D: Guarantor.
+//SC conditions: User’s address is in SC table B: Project manager.
+//Etherscan address: https://goerli.etherscan.io/address/0x999E68CDB47D8b98003964f95e70fE5a60cf461E
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: Guarantor_ins_001
-//Description: 
 
 contract owned {
   address public owner;
