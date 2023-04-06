@@ -1,8 +1,12 @@
+//Description: The MC can update the cash-in retention data by updating SC table M2.
+//SC conditions: User’s address is in SC table C: Main contractor.
+//Etherscan address: 		https://github.com/D-UCL/PBA-dApp/blob/main/Smart%20contract%20triggers/M2)%20CashOutRetention.Update.sol
+https://goerli.etherscan.io/address/0xBECb020105b6A12ED4Fce2a4594CE66DD9cE7D68
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: CashOutRetention_Update
-//Description: 
 
 contract owned {
   address public owner;
