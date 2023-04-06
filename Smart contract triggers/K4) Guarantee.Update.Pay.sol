@@ -1,8 +1,11 @@
+//Description: Enables the guarantor to send guarantee payments to the PBA by updating SC table K: Guarantee
+//SC conditions: User’s address is in SC table D: Guarantor
+//Etherscan address: https://goerli.etherscan.io/address/0x5cb81B13825fcE4Ed86FDF54C5C396CaD71f2a5B
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: PayGuarantee_Pay
-//Description: 
 
 contract owned {
   address public owner;
