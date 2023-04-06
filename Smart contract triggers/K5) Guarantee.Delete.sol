@@ -1,8 +1,11 @@
+//Description: Enables the MC to remove records from SC table K: Guarantee.
+//SC conditions: User’s address is in SC table C: Main contractor.
+//Etherscan address: https://goerli.etherscan.io/address/0xF142ab04227A4C3b24d53eb12DEB13Ce96F219d5
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: PayGuarantee_Del
-//Description: 
 
 contract owned {
   address public owner;
