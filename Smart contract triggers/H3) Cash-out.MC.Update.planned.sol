@@ -1,8 +1,11 @@
+//Description: Enables the MC to update the cash-in schedule by updating SC table H: Cash-out.
+//SC conditions: User’s address is in SC table C: Main contractor.
+//Etherscan address: https://goerli.etherscan.io/address/0x49E046B79730A59612754703307b2b399Db7D0b1
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: CashOut_MC_Update
-//Description: 
 
 contract owned {
   address public owner;
