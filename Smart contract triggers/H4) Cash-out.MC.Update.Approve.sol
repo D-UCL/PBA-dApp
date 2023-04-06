@@ -1,8 +1,11 @@
+//Description: Enables the MC to approve the completion of works by updating SC table H: Cash-out.
+//SC conditions: User’s address is in SC table C: Main contractor.
+//Etherscan address: https://goerli.etherscan.io/address/0x2DFD828d70c74895E63D2Db300B6006213ac4eD2
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: CashOut_MC_Approve
-//Description: 
 
 contract owned {
   address public owner;
