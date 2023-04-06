@@ -1,8 +1,11 @@
+//Description: Enables the MC to remove a cash-out record from SC table H: Cash-out, and ensures that the subcontractor cannot be removed while they have works planned in SC tables J & M (because it causes the smart contract to malfunction).
+//SC conditions: User’s address is in SC table C: Main contractor, payee’s address is not in SC table J: SubWorks, & payee’s address is not in SC table M: Cash-out retention.
+//Etherscan address: https://goerli.etherscan.io/address/0x28839c9A0c991477c86f608DdeBE874200d31051
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: CashOut_MC_Del_002
-//Description: 
 
 contract owned {
   address public owner;
