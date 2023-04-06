@@ -1,8 +1,11 @@
+//Description: Allows the subcontractor to pull their scheduled works from SC table H: Cash-out & place it into SC table J: SubWorks.
+//SC conditions: User’s address is in SC table H: Cash-out.
+//Etherscan address: https://goerli.etherscan.io/address/0x1Fe982F9B85C2449aC422638143aAa637D03105a
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: SubcWorks_ins
-//Description: 
 
 contract owned {
   address public owner;
