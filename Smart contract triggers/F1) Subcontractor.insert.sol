@@ -1,8 +1,11 @@
+//Description: Allows the MC to appoint the subcontractors (Sub) by inserting the subs’ addresses into SC table F: Subcontractors.
+//SC conditions: User’s address is in SC table C: Main contractor.
+//Etherscan address: https://goerli.etherscan.io/address/0x840184aBE72723f2b83F20f58b48fb7f2e0676d1
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: Sub_insert_002
-//Description: 
 
 contract owned {
   address public owner;
