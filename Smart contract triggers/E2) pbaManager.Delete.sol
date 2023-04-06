@@ -1,8 +1,11 @@
+//Description: Allows the PM to unappoint the PBA manager from SC table E: PBA manager.
+//SC conditions: User’s address is in SC table B: Project manager.
+//Etherscan address: https://goerli.etherscan.io/address/0xb7E8B4d818dB5D7C0c659A289DD5027dC40F2eC9
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: PBA_Del_002
-//Description: 
 
 contract owned {
   address public owner;
