@@ -1,8 +1,11 @@
+//Description: Allows the MC to update the % of works completed in SC table H: Cash-in schedule.
+//SC conditions: User’s address is in SC table C: Main contractor.
+//Etherscan address: https://goerli.etherscan.io/address/0xd48000276765449133041021f0632bcf01374853
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: CashOut_MC_Update_PercentComp
-//Description: 
 
 contract owned {
   address public owner;
