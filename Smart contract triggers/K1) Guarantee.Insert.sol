@@ -1,8 +1,11 @@
+//Description: Enables the MC to request for payment guarantee by inserting the request into SC table K: Guarantee.
+//SC conditions: User’s address is in SC table C: Main contractor. 
+//Etherscan address: https://goerli.etherscan.io/address/0x547D404F4CaDc1C4A022f36c54817D3E27017EBf
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: PayGuarantee_Ins
-//Description: 
 
 contract owned {
   address public owner;
