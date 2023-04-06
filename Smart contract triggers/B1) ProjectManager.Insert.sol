@@ -1,8 +1,11 @@
+//Description: Allows the client to appoint the project manager (PM) by inserting the PM’s address into SC table B: Project manager.
+//SC conditions: User’s address is in SC table A: Client.
+//Etherscan address: https://goerli.etherscan.io/address/0xA40BBA332fB81Edd161fa6E3E87fA4550b622db3
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: PM_Ins_001
-//Description: 
 
 contract owned {
   address public owner;
