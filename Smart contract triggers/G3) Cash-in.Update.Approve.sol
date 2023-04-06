@@ -1,8 +1,11 @@
+//Description The client can approve the cash-in schedule by updating SC table G: Cash-in.
+//SC conditions: User’s address is in SC table A: Client.
+//Etherscan address: https://goerli.etherscan.io/address/0xe56c2bc5ffD846321bb6cdfE2f2625C05B501871
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: CashIn_C_Update_approve
-//Description: 
 
 contract owned {
   address public owner;
