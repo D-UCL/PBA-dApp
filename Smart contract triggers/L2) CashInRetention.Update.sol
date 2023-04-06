@@ -1,8 +1,11 @@
+//Description: The MC can update the cash-in retention data by updating SC table L2.
+//SC conditions: User’s address is in SC table C: Main contractor.
+//Etherscan address: https://goerli.etherscan.io/address/0x14c4B4978901e06526b491024bD2b5D924a2D156
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: CashinRetention_Update_001
-//Description: 
 
 contract owned {
   address public owner;
