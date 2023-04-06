@@ -1,8 +1,11 @@
+//Description: Enables the guarantor to decline the payment guarantee request in SC table K: Guarantee.
+//SC conditions: User’s address is in SC table D: Guarantor.
+//Etherscan address: https://goerli.etherscan.io/address/0xac32F03D8e9c409f7dE691ea9e6CbE14918516Cb
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: PayGuarantee_Decline
-//Description: 
 
 contract owned {
   address public owner;
