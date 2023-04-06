@@ -1,8 +1,11 @@
+//Description: Enables the PM to approve the quality of works completed by updating SC table H: Cash-out.
+//SC conditions: User’s address is in SC table B: Project manager.
+//Etherscan address: https://goerli.etherscan.io/address/0xffb547E105C28bD6407Ef058fe24eA50Fd72D365
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: CashOut_PM_Approve
-//Description: 
 
 contract owned {
   address public owner;
