@@ -1,8 +1,11 @@
+//Description: The MC can approve the cash-in retention data by updating SC table M3.
+//SC conditions: User’s address is in SC table C: Main contractor.
+//Etherscan address: https://goerli.etherscan.io/address/0x178EFBbb1145dD60131656566923a057113cc1D5
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: CashOutRetention_Approved
-//Description: 
 
 contract owned {
   address public owner;
