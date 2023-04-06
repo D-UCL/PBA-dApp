@@ -1,8 +1,11 @@
+//Description: Allows the subcontractor to remove a record from SC table J: View.
+//SC conditions: User’s address is in SC table H: Cash-out.
+//Etherscan address: https://goerli.etherscan.io/address/0xf2Bd7ED060b9C7449BADF87611397486C7bC807E
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: SubWorks_del
-//Description: 
 
 contract owned {
   address public owner;
