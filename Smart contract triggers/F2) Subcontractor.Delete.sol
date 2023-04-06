@@ -1,8 +1,11 @@
+//Description: Allows the MC to unappoint the subs’ from SC table F: Subcontractors.
+//SC conditions: User’s address is in SC table C: Main contractor.
+//Etherscan address: https://goerli.etherscan.io/address/0x538c044F72F1aAfa15639D36393FEc1b54BF8130
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: Sub_Delete_002
-//Description: 
 
 contract owned {
   address public owner;
