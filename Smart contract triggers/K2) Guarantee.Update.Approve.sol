@@ -1,8 +1,11 @@
+//Description: Enables the guarantor to approve the payment guarantee request in SC table K: Guarantee.
+//SC conditions: User’s address is in SC table D: Guarantor.
+//Etherscan address: User’s address is in SC table D: Guarantor.
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: PayGuarantee_Approve
-//Description: 
 
 contract owned {
   address public owner;
