@@ -1,8 +1,11 @@
+//Description: Allows the PM to appoint the PBA’s address by inserting the PBA’s address into SC table E: PBA manager.
+//SC conditions: User’s address is in SC table B: Project manager.
+//Etherscan address: https://goerli.etherscan.io/address/0x5E8993Aa12d0bCA6c20edaD83756D8955824980A
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: PBA_Ins_002
-//Description: 
 
 contract owned {
   address public owner;
