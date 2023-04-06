@@ -1,8 +1,11 @@
+//Description: Allows the main contractor to remove the cash-in retention record from SC table L5
+//SC conditions: User’s address is in SC table C: Main contractor.
+//Etherscan address: https://goerli.etherscan.io/address/0x910d1A859F859de5CBCB3318f2fc07f2c8938035
+
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 //Name: CashinRetention_Delete_001
-//Description: 
 
 contract owned {
   address public owner;
